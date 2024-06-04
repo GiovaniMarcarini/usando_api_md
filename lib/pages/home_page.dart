@@ -23,6 +23,26 @@ class _HomePageState extends State<HomePage>{
         CidadesFragmet.title),
       ),
       body: Container(),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _fragment,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+            label: ConsultaCepFragmet.title,
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+            label: CidadesFragmet.title,
+          )
+        ],
+        onTap: (int newIndex){
+          if(newIndex != _fragment){
+            setState(() {
+              _fragment = newIndex;
+            });
+          }
+        },
+      ),
     );
   }
 }
