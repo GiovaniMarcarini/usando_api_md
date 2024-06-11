@@ -42,7 +42,7 @@ class _ConsultaCepFragmetState extends State<ConsultaCepFragmet>{
                       padding: EdgeInsets.all(10),
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ) : IconButton(
-                      onPressed: null,
+                      onPressed: _findCep,
                       icon: Icon(Icons.search),
                   ),
                 ),
@@ -56,8 +56,41 @@ class _ConsultaCepFragmetState extends State<ConsultaCepFragmet>{
                 },
               ),
           ),
+          Container(height: 10),
+          ..._buildResultWidgets(),
         ],
       ),
     );
+  }
+
+  Future<void> _findCep() async{
+    if(_formKey.currentState == null || !_formKey.currentState!.validate()){
+      return;
+    }
+    setState(() {
+      _loading = true;
+    });
+    try{
+      _cep = await _service.findCepAsObject(_cepFormatter.getUnmaskedText());
+    }catch(e){
+      debugPrint(e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Ocorreu um erro ao buscar o CEP, tente novamente!'),
+      ));
+    }
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  List<Widget> _buildResultWidgets(){
+    final List<Widget> widgets  = [];
+    if (_cep != null){
+      final map = _cep!.toJson();
+      for( final key in map.keys){
+        widgets.add(Text('$key: ${map[key]}'));
+      }
+    }
+    return widgets;
   }
 }
