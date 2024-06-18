@@ -29,7 +29,7 @@ class _FormCidadePageState extends State<FormCidadePage>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: _criarAppBar(),
-      body: Container();
+      body: _criarBody(),
 
     );
   }
@@ -75,7 +75,65 @@ class _FormCidadePageState extends State<FormCidadePage>{
     );
   }
 
-  //Implementar o List de UF
+  Widget _criarBody() => Padding(
+      padding: EdgeInsets.all(10),
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if(widget.cidade?.codigo != null){
+            Text('Código: ${widget.cidade!.codigo}'),
+            }
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Nome da Cidade',
+                  ),
+                  controller: _nomeController,
+                  validator: (String? value){
+                    if (value == null || value.trim().isEmpty){
+                      return 'Informe o nome da cidade';
+                    }
+                    return null;
+                  },
+                ),
+                DropdownButtonFormField(
+                  value: _currentUf,
+                  decoration: InputDecoration(
+                    labelText: 'Selecione a UF'
+                  ),
+                  items: _buildDropDownItens(),
+                  onChanged: (String? value){
+                    setState(() {
+                      _currentUf = value;
+                    });
+                  },
+                  validator: (String? value){
+                    if (value == null || value.trim().isEmpty){
+                      return 'Selecione uma UF';
+                    },
+                    return null;
+                  },
+                ),
+            ],
+          ),
+        ),
+      ),
+  )
+
+  List<DropdownMenuItem<String>> _buildDropDownItens(){
+    const ufs = ['AC', 'AL', 'AP', 'GO', 'PR', 'SC', 'SP', 'RS'];
+    final List<DropdownMenuItem<String>> itens = [];
+    for (final uf in ufs){
+      itens.add(DropdownMenuItem(
+          value: uf,
+          child: Text(uf),
+      ));
+    }
+    return itens;
+  }
 
   Future<void> _save() async{
     if(_formKey.currentState == null || !_formKey.currentState!.validate()){
