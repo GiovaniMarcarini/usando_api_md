@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage>{
     return Scaffold(
       appBar: AppBar(
         title: Text(_fragment == 0 ? ConsultaCepFragmet.title :
-        CidadesFragmet.title),
+        CidadesFragment.title),
       ),
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage>{
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.list),
-            label: CidadesFragmet.title,
+            label: CidadesFragment.title,
           )
         ],
         onTap: (int newIndex){
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage>{
   }
 
   Widget _buildBody() => _fragment == 0 ? ConsultaCepFragmet() :
-  CidadesFragmet();
+  CidadesFragment();
 
   Widget? _buildFloatingActionButton(){
     if (_fragment == 0){
