@@ -11,10 +11,10 @@ class CidadesFragment extends StatefulWidget {
   const CidadesFragment({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _CidadesFragmentState();
+  State<StatefulWidget> createState() => CidadesFragmentState();
 }
 
-class _CidadesFragmentState extends State<CidadesFragment> {
+class CidadesFragmentState extends State<CidadesFragment> {
   final _service = CidadeService();
   final List<Cidade> _cidades = [];
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();

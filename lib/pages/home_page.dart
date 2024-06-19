@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
 
+  final _listaCidadesKey = GlobalKey<CidadesFragmentState>();
   var _fragment = 0;
 
   @override
@@ -47,18 +48,18 @@ class _HomePageState extends State<HomePage>{
     );
   }
 
-  Widget _buildBody() => _fragment == 0 ? ConsultaCepFragmet() :
-  CidadesFragment();
+  Widget _buildBody() => _fragment == 0
+      ? ConsultaCepFragmet() : CidadesFragment(key: _listaCidadesKey);
 
-  Widget? _buildFloatingActionButton(){
-    if (_fragment == 0){
+  Widget? _buildFloatingActionButton() {
+    if (_fragment == 0) {
       return null;
     }
-    return const FloatingActionButton(
-        onPressed: null,
-        child: Icon(Icons.add),
-        tooltip: 'Cadastrar Cidade',
-        );
+    return FloatingActionButton(
+      child: const Icon(Icons.add),
+      tooltip: 'Cadastrar Cidade',
+      onPressed: () => _listaCidadesKey.currentState?.abrirForm(),
+    );
   }
 
 }
